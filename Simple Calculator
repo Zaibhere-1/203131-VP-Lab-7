@@ -1,0 +1,48 @@
+using System;
+
+namespace SimpleCalculator
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Welcome to the Simple Calculator!");
+
+            Console.Write("Enter the first number: ");
+            double num1 = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Enter an operator (+, -, *, /): ");
+            string op = Console.ReadLine();
+
+            Console.Write("Enter the second number: ");
+            double num2 = Convert.ToDouble(Console.ReadLine());
+
+            double result = 0;
+            switch (op)
+            {
+                case "+":
+                    result = Add(num1, num2);
+                    break;
+                case "-":
+                    result = Subtract(num1, num2);
+                    break;
+                case "*":
+                    result = Multiply(num1, num2);
+                    break;
+                case "/":
+                    result = Divide(num1, num2);
+                    break;
+                default:
+                    Console.WriteLine("Invalid operator.");
+                    return;
+            }
+
+            Console.WriteLine($"Result: {result}");
+        }
+
+        static double Add(double a, double b) => a + b;
+        static double Subtract(double a, double b) => a - b;
+        static double Multiply(double a, double b) => a * b;
+        static double Divide(double a, double b) => b != 0 ? a / b : throw new DivideByZeroException();
+    }
+}

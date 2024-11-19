@@ -1,0 +1,76 @@
+using System;
+using System.Windows.Forms;
+
+namespace GUICalculator
+{
+    static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new CalculatorForm());
+        }
+    }
+
+    public class CalculatorForm : Form
+    {
+        private TextBox textBox1, textBox2, textBoxResult;
+        private Button buttonAdd, buttonSubtract, buttonMultiply, buttonDivide;
+
+        public CalculatorForm()
+        {
+            this.Text = "Calculator";
+            this.Width = 300;
+            this.Height = 300;
+
+            // Input fields
+            textBox1 = new TextBox { Top = 20, Left = 20, Width = 100 };
+            textBox2 = new TextBox { Top = 20, Left = 150, Width = 100 };
+            textBoxResult = new TextBox { Top = 60, Left = 20, Width = 230, ReadOnly = true };
+
+            this.Controls.Add(textBox1);
+            this.Controls.Add(textBox2);
+            this.Controls.Add(textBoxResult);
+
+            // Buttons
+            buttonAdd = new Button { Text = "Add", Top = 100, Left = 20 };
+            buttonSubtract = new Button { Text = "Subtract", Top = 100, Left = 100 };
+            buttonMultiply = new Button { Text = "Multiply", Top = 150, Left = 20 };
+            buttonDivide = new Button { Text = "Divide", Top = 150, Left = 100 };
+
+            buttonAdd.Click += (s, e) => Calculate("+");
+            buttonSubtract.Click += (s, e) => Calculate("-");
+            buttonMultiply.Click += (s, e) => Calculate("*");
+            buttonDivide.Click += (s, e) => Calculate("/");
+
+            this.Controls.Add(buttonAdd);
+            this.Controls.Add(buttonSubtract);
+            this.Controls.Add(buttonMultiply);
+            this.Controls.Add(buttonDivide);
+        }
+
+        private void Calculate(string operation)
+        {
+            try
+            {
+                double num1 = double.Parse(textBox1.Text);
+                double num2 = double.Parse(textBox2.Text);
+                double result = operation switch
+                {
+                    "+" => num1 + num2,
+                    "-" => num1 - num2,
+                    "*" => num1 * num2,
+                    "/" => num2 != 0 ? num1 / num2 : throw new DivideByZeroException(),
+                    _ => 0
+                };
+                textBoxResult.Text = $"Result: {result}";
+            }
+            catch
+            {
+                textBoxResult.Text = "Invalid input.";
+            }
+        }
+    }
+}

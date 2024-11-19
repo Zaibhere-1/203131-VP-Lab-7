@@ -1,0 +1,41 @@
+using System;
+using System.Windows.Forms;
+
+namespace SquareApp
+{
+    static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new SquareForm());
+        }
+    }
+
+    public class SquareForm : Form
+    {
+        private ListBox listBoxSquares;
+
+        public SquareForm()
+        {
+            this.Text = "Square Calculator";
+            this.Width = 300;
+            this.Height = 300;
+
+            listBoxSquares = new ListBox { Top = 20, Left = 20, Width = 200, Height = 200 };
+            this.Controls.Add(listBoxSquares);
+
+            CalculateSquares();
+        }
+
+        private void CalculateSquares()
+        {
+            for (int i = 1; i <= 10; i++)
+            {
+                listBoxSquares.Items.Add($"Number: {i}, Square: {i * i}");
+            }
+        }
+    }
+}
